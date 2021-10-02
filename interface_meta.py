@@ -2,13 +2,14 @@
 Define our interface metaclass here
 """
 import inspect
+import warnings
 from abc import ABCMeta
 
 
 def _register_interface_subclass(cls, subclass):
     subclass_name = subclass.__name__
     if subclass_name in cls._all_classes:
-        print(f"Already registered {subclass_name}")
+        warnings.warn(f"Already registered {subclass_name}")
     cls._all_classes[subclass_name] = subclass
 
 
