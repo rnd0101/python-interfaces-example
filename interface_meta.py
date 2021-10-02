@@ -22,16 +22,16 @@ def is_valid_interface_subclass(cls, subclass, attr):
     cls_argspec = inspect.getfullargspec(cls_attr)
     subclass_argspec = inspect.getfullargspec(subclass_attr)
     if cls_argspec != subclass_argspec:
-        return (f"\nSignature mismatch '{cls.__name__}.{attr}' <-> '{subclass.__name__}.{attr}'."
-                f"\nIn the interface : {cls_argspec}."
-                f"\nIn concrete class: {subclass_argspec}")
+        return (f"Signature mismatch '{cls.__name__}.{attr}' <-> '{subclass.__name__}.{attr}'."
+                f"In the interface : {cls_argspec}."
+                f"In concrete class: {subclass_argspec}")
 
 
 def subclasshook(cls, subclass):
     cls._register_interface_subclass(cls, subclass)
     errors = [is_valid_interface_subclass(cls, subclass, am) for am in cls.__abstractmethods__]
     if any(errors):
-        raise TypeError("".join(e for e in errors if e))
+        raise TypeError("\n".join(e for e in errors if e))
     return True
 
 
