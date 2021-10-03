@@ -38,14 +38,24 @@ class InterfaceMeta(ABCMeta):
         i.__subclasshook__ = classmethod(subclasshook)
         return i
 
+    _id_attribute = "__name__"
+
     def _register_interface_subclass(cls, subclass):
-        subclass_name = subclass.__name__
-        if subclass_name in cls._all_classes:
-            warnings.warn(f"Already registered {subclass_name}")
-        cls._all_classes[subclass_name] = subclass
+        """Register a class, which implements the interface. Class name is used as id for the registration"""
+        subclass_ids = getattr(subclass, cls._id_attribute, None)
+        if subclass_ids is None:
+            return
+        if isinstance(subclass_ids, str):
+            subclass_ids = [subclass_ids]
+        if set(subclass_ids) & set(cls._all_classes):
+            warnings.warn(f"Already registered {subclass_ids}")
+        for subclass_id in subclass_ids:
+            cls._all_classes[subclass_id] = subclass
 
     def all_classes(cls):
+        """Get a mapping of ids to classes, which implement the interface"""
         return cls._all_classes
 
     def for_id(cls, an_id):
+        """Get a class, registered to support an interface, by id"""
         return cls._all_classes.get(an_id)

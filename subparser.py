@@ -8,6 +8,7 @@ class PdfParserHtml(SuccessfulSubFormalParserInterface, ParserClassificationInte
     """Extract html from a PDF."""
 
     _category = None
+    id = "PdfParserHtml"
 
     @property
     def category(self):

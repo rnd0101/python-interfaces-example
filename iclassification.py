@@ -10,6 +10,7 @@ from interface_meta import InterfaceMeta
 
 
 class ParserClassificationInterface(metaclass=InterfaceMeta):
+    _id_attribute = "id"
 
     @property
     @abstractmethod

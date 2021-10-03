@@ -8,6 +8,7 @@ class EmlParserNew(FormalParserInterface, ParserClassificationInterface):
     """Extract text from an email."""
 
     category = "EML"
+    id = "EmlParserNew"
 
     def load_data_source(self, path: str, file_name: str) -> str:
         """Overrides FormalParserInterface.load_data_source()"""

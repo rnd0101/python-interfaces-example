@@ -8,6 +8,7 @@ class PdfParserNew(FormalParserInterface, ParserClassificationInterface):
     """Extract text from a PDF."""
 
     category = "PDF"
+    id = "PdfParserNew"
 
     def load_data_source(self, path: str, file_name: str) -> str:
         """Overrides FormalParserInterface.load_data_source()"""
@@ -24,6 +25,7 @@ class PdfParserNew(FormalParserInterface, ParserClassificationInterface):
 @FormalParserInterface.register
 class PdfParserNewest(PdfParserNew):
     """Extract text from a PDF."""
+    id = "PdfParserNewest"
 
     def load_data_source(self, path: str, file_name: str) -> str:
         """Overrides FormalParserInterface.load_data_source()"""
