@@ -22,4 +22,4 @@ Contributors
 License
 -------
 
-TBD
+*[License](LICENSE)
