@@ -6,6 +6,8 @@ Lightweight interfaces, which register their implementation via ABC register mec
 TODO
 ----
 
+* Structure as a one-file package
+* Remove unrelated (main module)
 * Move example to examples or
 * Add tests to demonstrate usage
 * Type-hint metaclass in a future-proof way
