@@ -1,16 +1,11 @@
 """
 Define our interface metaclass here
 """
+from __future__ import annotations
+
 import inspect
 import warnings
 from abc import ABCMeta
-
-
-def _register_interface_subclass(cls, subclass):
-    subclass_name = subclass.__name__
-    if subclass_name in cls._all_classes:
-        warnings.warn(f"Already registered {subclass_name}")
-    cls._all_classes[subclass_name] = subclass
 
 
 def is_valid_interface_subclass(cls, subclass, attr):
@@ -29,10 +24,10 @@ def is_valid_interface_subclass(cls, subclass, attr):
 
 
 def subclasshook(cls, subclass):
-    cls._register_interface_subclass(cls, subclass)
+    cls._register_interface_subclass(subclass)
     errors = [is_valid_interface_subclass(cls, subclass, am) for am in cls.__abstractmethods__]
     if any(errors):
-        raise TypeError("\n".join(e for e in errors if e))
+        raise TypeError("\n".join(str(e) for e in errors if e))
     return True
 
 
@@ -40,9 +35,14 @@ class InterfaceMeta(ABCMeta):
     def __new__(mcs, *args, **kwargs):
         i = super().__new__(mcs, *args, **kwargs)
         i._all_classes = {}
-        i._register_interface_subclass = _register_interface_subclass
         i.__subclasshook__ = classmethod(subclasshook)
         return i
+
+    def _register_interface_subclass(cls, subclass):
+        subclass_name = subclass.__name__
+        if subclass_name in cls._all_classes:
+            warnings.warn(f"Already registered {subclass_name}")
+        cls._all_classes[subclass_name] = subclass
 
     def all_classes(cls):
         return cls._all_classes
