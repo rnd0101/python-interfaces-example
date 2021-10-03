@@ -22,4 +22,4 @@ Contributors
 License
 -------
 
-*[License](LICENSE)
+* [MIT License](LICENSE)
